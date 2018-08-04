@@ -22,7 +22,7 @@
 - Vaner 模型的学习和实现
 - Prototypical 模型的学习和实现
 - 基于度量学习的PrototypicalNetwork
-- 基于线性空间正交投影方法的Network Embedded Regression 
+- 基于线性空间正交投影方法的Network Embedded Regression
 - 基于限制特征分布的VANER
 
 ### 3. 主流思路的调研与分析
@@ -82,7 +82,7 @@
 
 
 
-#### 3.3. Relation Network  
+#### 3.3. Relation Network
 
 ##### 3.3.1. 直观思路理解
 
@@ -171,9 +171,9 @@
 
   也就是要保证同一类的点距离较近、不同类的点距离较远。
 
-  更进一步，本质上讲，这里求平均feature的操作用的是线性空间$R^{4096}$上的加法，但是fc7输出的feature可能并不是线性空间，因此这种求平均的方法可能会丧失同一类feature的特性。 
+  更进一步，本质上讲，这里求平均feature的操作用的是线性空间$R^{4096}$上的加法，但是fc7输出的feature可能并不是线性空间，因此这种求平均的方法可能会丧失同一类feature的特性。
 
-- 在求出feature到embedding空间的像时，loss函数保证这个映射具有“保留内积”（余弦函数可以看成单位向量的内积）的特性。但这个内积依然是线性空间的内积，并不一定适用feature所在的某个特殊的空间。 
+- 在求出feature到embedding空间的像时，loss函数保证这个映射具有“保留内积”（余弦函数可以看成单位向量的内积）的特性。但这个内积依然是线性空间的内积，并不一定适用feature所在的某个特殊的空间。
 
 正因为我们不知道fc7层的分布函数，所以我们人为定义的度量（论文中是余弦相似度）都是不准确的。因此，我们可以有两种可能的方向：
 
@@ -210,7 +210,7 @@ $$
 
 
 
-#### 4.2. 基于线性空间正交投影方法的Network Embedded Regression 
+#### 4.2. 基于线性空间正交投影方法的Network Embedded Regression
 
 ##### 4.2.1. 基本思路
 
@@ -259,7 +259,7 @@ $$
 $$
 W_{novel} = V *W_{base}^{T}
 $$
-最终，得到两模型（新经验，旧经验）组合成的分类器参数 
+最终，得到两模型（新经验，旧经验）组合成的分类器参数
 $$
 W = W_{model} *\alpha +  W_{base} * \beta
 $$
@@ -292,14 +292,14 @@ $$
 $$
 其中，$\lambda$ 是参数，在实践过程中，由于损失函数 $\mathscr{L}(V,T)$ 可以降到非常小的值，所以 $\lambda$ 的取值并不关键。得到合理的 $V,T$ 以后，我们每加入一个新类相当于将损失函数拓展为
 $$
-\mathscr{L}(v_{new}) = || \big[ \begin{matrix} 
+\mathscr{L}(v_{new}) = || \big[ \begin{matrix}
 A& a_{new}^T \\
 a_{new} & 1 \\
 \end{matrix} \big]
 - \big[ \begin{matrix}
 V \\
 v_{new}
-\end{matrix} \big] 
+\end{matrix} \big]
 [\begin{matrix}
 V^T & v_{new}^T\\
 \end{matrix}]||_F^2
